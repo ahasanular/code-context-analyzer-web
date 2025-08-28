@@ -1,7 +1,7 @@
 from typing import List, Dict
 from github import Github, GithubException
 import re
-from code_context_analyzer.analyzer import run_analysis
+from code_context_analyzer.analyzer import Analyzer
 from code_context_analyzer.repo_system import RepositorySession
 # from code_context_analyzer.analyzer.formatter import
 
@@ -80,11 +80,12 @@ class CodeAnalysisService:
 
     def run_analysis(self, source_url: str, branch: str) -> str:
         with RepositorySession(source_url, branch) as session:
-            results = run_analysis(
+            analyzer = Analyzer(
                 session.path,
                 languages=self.languages,
                 max_files=self.max_files,
                 depth=self.depth,
                 ignore_tests=self.ignore_tests
             )
+            results = analyzer.run_analysis()
             return results
