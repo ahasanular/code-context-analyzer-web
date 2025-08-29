@@ -2,7 +2,7 @@ from fastapi import APIRouter, Request, HTTPException
 from pydantic import BaseModel
 import markdown
 from markdown.extensions.fenced_code import FencedCodeExtension
-from fastapi.responses import PlainTextResponse
+from fastapi.responses import PlainTextResponse, JSONResponse
 
 from typing import List, Optional
 from ..services.services import GitHubService, CodeAnalysisService
@@ -46,9 +46,7 @@ async def process_repo(req: RepoRequest, request: Request):
             ignore_tests = req.ignore_tests,
         )
         report = analyzer.run_analysis(req.repo_url, req.branch)
-        # report = markdown.markdown(report, extensions=[FencedCodeExtension()])
-        print(report)
-        return PlainTextResponse(report)
+        return JSONResponse({"status": 200, "report":report})
     except ValueError as ve:
         raise HTTPException(status_code=400, detail=str(ve))
     except Exception as e:

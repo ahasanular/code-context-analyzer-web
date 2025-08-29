@@ -1,9 +1,9 @@
-from typing import List, Dict
+from typing import List, Dict, Any
 from github import Github, GithubException
 import re
 from code_context_analyzer.analyzer import Analyzer
 from code_context_analyzer.repo_system import RepositorySession
-# from code_context_analyzer.analyzer.formatter import
+from app.custom_formatter.format import CustomFormatter
 
 class GitHubService:
     URL_PATTERNS = re.compile(
@@ -65,6 +65,16 @@ class GitHubService:
             raise GithubException(f"GitHub API error: {e}") from e
 
 
+class CustomAnalyzer(Analyzer):
+    def get_formatter(self, name: str = None):
+
+        return CustomFormatter(
+            depth=self.depth,
+            method_preview=self.method_preview,
+            doc_chars=self.doc_chars,
+        )
+
+
 class CodeAnalysisService:
     def __init__(
         self,
@@ -78,9 +88,9 @@ class CodeAnalysisService:
         self.depth = depth
         self.ignore_tests = ignore_tests
 
-    def run_analysis(self, source_url: str, branch: str) -> str:
+    def run_analysis(self, source_url: str, branch: str) -> Dict[str, Any]:
         with RepositorySession(source_url, branch) as session:
-            analyzer = Analyzer(
+            analyzer = CustomAnalyzer(
                 session.path,
                 languages=self.languages,
                 max_files=self.max_files,
