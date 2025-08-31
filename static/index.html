@@ -263,7 +263,7 @@
     const repoUrl = document.getElementById("repo").value;
     const branch = document.getElementById("branch").value;
     const maxFiles = parseInt(document.getElementById("max-files").value);
-    const depth = parseInt(document.getElementById("depth").value);
+    // const depth = parseInt(document.getElementById("depth").value);
     const ignoreTests = document.getElementById("ignore-tests").checked;
 
     const submitBtn = document.getElementById("submit-btn");
@@ -289,7 +289,6 @@
           repo_url: repoUrl,
           branch,
           max_files: maxFiles,
-          depth,
           ignore_tests: ignoreTests
         })
       });
