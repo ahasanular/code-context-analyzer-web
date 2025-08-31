@@ -69,7 +69,6 @@ class CustomAnalyzer(Analyzer):
     def get_formatter(self, name: str = None):
 
         return CustomFormatter(
-            depth=self.depth,
             method_preview=self.method_preview,
             doc_chars=self.doc_chars,
         )
@@ -78,24 +77,23 @@ class CustomAnalyzer(Analyzer):
 class CodeAnalysisService:
     def __init__(
         self,
-        languages: list[str],
         max_files: int = 1000,
-        depth: int = 3,
-        ignore_tests: bool = True
+        ignore_tests: bool = True,
+        ignore_patterns=None
     ):
-        self.languages = languages
+        if ignore_patterns is None:
+            ignore_patterns = []
         self.max_files = max_files
-        self.depth = depth
         self.ignore_tests = ignore_tests
+        self.ignore_patterns = ignore_patterns
 
     def run_analysis(self, source_url: str, branch: str) -> Dict[str, Any]:
         with RepositorySession(source_url, branch) as session:
             analyzer = CustomAnalyzer(
                 session.path,
-                languages=self.languages,
                 max_files=self.max_files,
-                depth=self.depth,
-                ignore_tests=self.ignore_tests
+                ignore_tests=self.ignore_tests,
+                ignore=self.ignore_patterns
             )
             results = analyzer.run_analysis()
             return results

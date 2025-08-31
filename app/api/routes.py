@@ -14,10 +14,9 @@ router = APIRouter()
 class RepoRequest(BaseModel):
     repo_url: str
     branch: str
-    languages: List[str] = ["py"]
     max_files: int = 1000
-    depth: int = 3
     ignore_tests: bool = True
+    ignore_patterns: List[str] = []
 
 
 @router.get("/branches")
@@ -40,10 +39,9 @@ async def get_branches(repo_url: str, request: Request):
 async def process_repo(req: RepoRequest, request: Request):
     try:
         analyzer = CodeAnalysisService(
-            languages = req.languages,
             max_files = req.max_files,
-            depth = req.depth,
             ignore_tests = req.ignore_tests,
+            ignore_patterns = req.ignore_patterns,
         )
         report = analyzer.run_analysis(req.repo_url, req.branch)
         return JSONResponse({"status": 200, "report":report})

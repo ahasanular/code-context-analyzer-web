@@ -3,7 +3,7 @@ from typing import List, Dict, Any
 
 
 class CustomFormatter(LegacyCodeFormatter):
-    def format(self, parsed_data: List[Dict[str, Any]]) -> str:
+    def format(self, parsed_data: List[Dict[str, Any]]) -> Dict[str, str]:
         """Generate the complete markup report"""
         self.parsed_data = parsed_data
 

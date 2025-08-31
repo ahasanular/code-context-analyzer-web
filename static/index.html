@@ -90,12 +90,23 @@
   </style>
 </head>
 <body class="bg-gray-900 text-gray-200 flex justify-center items-start min-h-screen p-10">
-  <div class="w-full max-w-2xl bg-gray-800 p-6 rounded-2xl shadow-lg space-y-4">
-    <h1 class="text-2xl font-bold text-purple-400">🚀 Repo Analyzer</h1>
+  <div class="w-full max-w-4xl bg-gray-800 p-6 rounded-2xl shadow-lg space-y-4">
+    <h1 class="text-2xl font-bold text-purple-400">🚀 CCA (Code Context Analyzer)</h1>
+      <p class="ps-3 text-justify text-gray-400">
+          CCA helps AI handle large codebases by auto-generating layered
+          summaries of the project’s structure.
+      </p>
+      <div class="flex justify-center space-x-6 text-gray-400">
+        <p>Follow me on</p>
+        <a href="https://github.com/ahasanular" target="_blank" class="hover:text-white underline font-bold">GitHub</a>
+        <a href="https://www.linkedin.com/in/md-ahasanul-arafath/" target="_blank" class="hover:text-white underline font-bold">LinkedIn</a>
+        <a href="https://ahasanularafath.com/" target="_blank" class="hover:text-white underline font-bold">Portfolio</a>
+      </div>
+
 
     <!-- Repo Input with inline OK button -->
     <div class="flex space-x-2">
-      <input id="repo" type="text" placeholder="Enter GitHub repo URL"
+      <input id="repo" type="text" placeholder="Enter GitHub repo URL to analyze"
         class="flex-grow p-3 rounded bg-gray-700 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-400"/>
       <button id="ok-btn" onclick="fetchBranches()"
         class="px-4 py-2 bg-purple-600 hover:bg-purple-700 rounded-lg">OK</button>
@@ -117,11 +128,11 @@
             class="w-full p-3 rounded bg-gray-700 border border-gray-600"/>
         </div>
 
-        <div class="flex-1">
-          <label>Depth</label>
-          <input id="depth" type="number" value="3"
-            class="w-full p-3 rounded bg-gray-700 border border-gray-600"/>
-        </div>
+<!--        <div class="flex-1">-->
+<!--          <label>Depth</label>-->
+<!--          <input id="depth" type="number" value="3"-->
+<!--            class="w-full p-3 rounded bg-gray-700 border border-gray-600"/>-->
+<!--        </div>-->
 
         <div class="flex items-center space-x-2 mt-6">
           <input id="ignore-tests" type="checkbox" checked class="w-4 h-4"/>
@@ -147,17 +158,33 @@
       </div>
 
       <!-- Tabs -->
-      <div class="flex space-x-2 mb-4">
-        <button class="tab-btn active px-4 py-2 rounded bg-gray-700" data-tab="tree">Tree</button>
-        <button class="tab-btn px-4 py-2 rounded bg-gray-700" data-tab="details">Detailed Description</button>
-      </div>
+      <div class="flex items-end gap-2 border-b border-gray-700 mb-0">
+          <button
+            class="tab-btn active px-4 py-2 text-sm font-medium rounded-t-lg border border-gray-600 border-b-0 -mb-px bg-gray-900 text-white"
+            data-tab="tree">
+            Tree
+          </button>
+          <button
+            class="tab-btn px-4 py-2 text-sm font-medium rounded-t-lg border border-gray-600 border-b-0 -mb-px bg-gray-700 text-gray-300 hover:bg-gray-600 hover:text-white"
+            data-tab="details">
+            Detailed Description
+          </button>
+          <div class="flex-1"></div>
+        </div>
 
       <!-- Tab Contents -->
       <div class="bg-gray-900 rounded-xl p-6 overflow-x-auto">
         <div id="tab-tree" class="tab-content active markdown-body"></div>
         <div id="tab-details" class="tab-content markdown-body"></div>
       </div>
+
+
     </div>
+
+      <!-- Footer -->
+    <footer class="text-center text-gray-500 text-sm border-t border-gray-700 pt-4 mt-8">
+      © 2025 <a class="underline font-bold" href="https://ahasanularafath.com/" target="_blank">Md Ahasanul Arafath</a>. All rights reserved. | Built with ❤️
+    </footer>
 
 <script>
   // Create a custom renderer that extends the default renderer
